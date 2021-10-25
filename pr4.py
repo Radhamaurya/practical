@@ -1,1 +1,0 @@
-# Using Data Set (a), add one new value in salary as key tax with value 10% of  allowance.
