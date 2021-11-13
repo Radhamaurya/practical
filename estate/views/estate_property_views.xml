@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="estate_property_offer_tree" model="ir.ui.view">
+        <field name="name">Estate Property Offer</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="price"/>
+                <field name="partner_id"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+    <record id="estate_property_tree" model="ir.ui.view">
+        <field name="name">Estate Property Name</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="expected_price"/>
+                <field name="selling_price" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+    <record id="estate_property_form" model="ir.ui.view">
+        <field name="name">Estate Property Name</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                        <field name="property_type_id"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="test_id"/>
+                            <field name="property_tag_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image" class="oe_avatar"/>
+                            <field name="validity"/>
+                        </group>
+                        <group>
+                            <field name="best_price"/>
+                            <field name="date_deadline"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <group>
+                                <group>
+                                    <field name="description"/>
+                                    <field name="postcode"/>
+                                </group>
+                                <group>
+                                    <field name="date_availability"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Price">
+                            <group>
+                                <field name="expected_price"/>
+                                <field name="selling_price"/>
+                            </group>
+                        </page>
+                        <page string="Property Details">
+                            <group>
+                                <group>
+                                    <field name="bedrooms"/>
+                                    <field name="living_area"/>
+                                </group>
+                                <group>
+                                    <field name="facades"/>
+                                    <field name="garage"/>
+                                </group>
+                                <group>
+                                    <field name="garden"/>
+                                    <field name="garden_area"/>
+                                </group>
+                                <group>
+                                    <field name="garden_orientation"/>
+                                    <field name="total_area" />
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Offer">
+                            <field name="property_offer_ids"/>
+                        </page>
+                        <page string="Other Info">
+                            <group>
+                                <field name="salesman_id"/>
+                                <field name="buyer_id"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id="estate_property_search" model="ir.ui.view">
+        <field name="name">Estate Property Search</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="postcode"/>
+                <field name="expected_price"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="facades"/> 
+                <filter name="4 or more bedrooms" domain="[('bedrooms', '>', 3)]"/>
+                <filter name="Properties with Garage" domain="[('garage', '=', True)]"/>
+                <filter name="2 bedrooms with garden" domain="[('bedrooms', '=', 2),('garage', '=', True)]"/>
+                <group expand="1" string="Group By"> 
+                    <filter string="Postal Code" name="postcode" context="{'group_by': 'postcode'}"/>
+                    <filter string="Number of bedrooms" name="bedrooms" context="{'group_by': 'bedrooms'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>
