@@ -7,8 +7,8 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <record id="books_action" model="ir.actions.act_window">
-        <field name="name">Books</field>
+ <record id="books_action" model="ir.actions.act_window">
+        <field name="name">book</field>
         <field name="res_model">book</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -34,7 +34,7 @@
         
     </menuitem>
 
-    <menuitem id="menu_real_estate_book" name="Books" parent="menu_real_estate_root"/>
+    <menuitem id="menu_real_estate_book" name="library" parent="menu_real_estate_root"/>
     <menuitem id="menu_real_estate_book_action" parent="menu_real_estate_book" action="books_action"/>
 
     <menuitem id="menu_real_estate_property_type" name="Settings" parent="menu_real_estate_root"/>
