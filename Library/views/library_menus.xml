@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="library_action" model="ir.actions.act_window">
+    <field name="name">Book</field>
+    <field name="res_model">library.property</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="library_menu_root" name="Library">
+    <menuitem id="library_book_menu" name="library">
+        <menuitem id="library_book_menu_action" action="library_action"/>
+    </menuitem>
+</menuitem>
+
+</odoo>
