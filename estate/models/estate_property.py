@@ -1,50 +1,7 @@
-
-from odoo import models, fields, api
-
-
-class Test(models.Model):
-    _name = 'test'
-    _description = 'Test'
-    # _rec_name = data
-
-    data = fields.Char()
-    pincode = fields.Integer()
-
-    # seld here will be recordset [ list of many records ]
-    def name_get(self):
-        res = []
-        for r in self:
-            res.append((r.id, r.data))
-        return res
-
-
-class EstatePropertOffer(models.Model):
-    _name = 'estate.property.offer'
-    _description = 'Estate Property Offer'
-
-    price = fields.Float()
-    status = fields.Selection([('accepted', 'Accepted'), ('refuse', 'Refused')])
-    partner_id = fields.Many2one('res.partner')
-    property_id = fields.Many2one('estate.property')
-
-
-class EstatePropertyTag(models.Model):
-    _name = 'estate.property.tag'
-    _description = 'Estate Property Tag'
-
-    name = fields.Char()
-
-
-class EstatePropertyType(models.Model):
-    _name = 'estate.property.type'
-    _description = 'Estate Property Type'
-
-    name = fields.Char()
-
-
-class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Estate Property'
+    # _sql_constraints = [('postive_price', 'check(expected_price > 0)', 'Enter positive value')]
+    _order = "id desc"
 
     # def test(self):
     #     return fields.Datetime.now()
@@ -107,10 +64,29 @@ class EstateProperty(models.Model):
 
     @api.depends('living_area', 'garden_area')
     def _compute_area(self):
-        print("\n\n ----- _compute_area method call")
+        # print("\n\n ----- _compute_area method call")
         for record in self:
             record.total_area = record.living_area + record.garden_area
 
     def _inverse_area(self):
         for record in self:
             record.living_area = record.garden_area = record.total_area / 2
+
+    def action_cancel(self):
+        for record in self:
+            if record.state == 'sold':
+                raise UserError("Sold Property cannot be canceled")
+            record.state = 'cancel'
+
+    def action_cancel(self):
+        for record in self:
+            if record.state == 'sold':
+                raise UserError("Sold Property cannot be canceled")
+        record.state = 'cancel'
+
+    @api.constrains('living_area', 'garden_area')
+    def _check_garden_area(self):
+        for record in self:
+            if record.living_area < record.garden_area:
+                raise ValueError("Garden cannot be bigger than living area")
+

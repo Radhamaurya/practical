@@ -26,12 +26,12 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="menu_real_estate_root" name="Reat Estate">
-        <menuitem id="menu_real_estate_advertisments" name="Advertisements">
+    <menuitem id="menu_real_estate_root" name="Real Estate">
+        <menuitem id="menu_real_estate_advertisements" name="Advertisements">
             <menuitem id="menu_real_estate_action" action="real_estate_properties_action"/>
             <menuitem id="menu_real_estate_offer_action" action="real_estate_properties_offer_action"/>
         </menuitem>
-        
+
     </menuitem>
 
     <menuitem id="menu_real_estate_book" name="library" parent="menu_real_estate_root"/>
@@ -39,6 +39,4 @@
 
     <menuitem id="menu_real_estate_property_type" name="Settings" parent="menu_real_estate_root"/>
     <menuitem id="menu_real_estate_property_type_action" parent="menu_real_estate_property_type" action="estate_property_type_action"/>
-
-
 </odoo>

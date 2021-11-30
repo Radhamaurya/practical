@@ -27,13 +27,15 @@
         </field>
     </record>
 
-
-
     <record id="estate_property_form" model="ir.ui.view">
         <field name="name">Estate Property Name</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <form>
+              <!-- <header>
+                    <button name="action_sold" type="object" string="Sold"/>
+                    <button name="action_cancel" type="object" string="Cancel"/>
+               </header>-->
                 <sheet>
                     <div class="oe_title">
                         <h1><field name="name"/></h1>
@@ -41,7 +43,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="test_id"/>
+                           <!--<field name="state"/>-->
                             <field name="property_tag_ids" widget="many2many_tags"/>
                         </group>
                         <group>
@@ -89,10 +91,15 @@
                                     <field name="garden_orientation"/>
                                     <field name="total_area" />
                                 </group>
-                            </group>
+                                </group>
                         </page>
                         <page string="Offer">
                             <field name="property_offer_ids"/>
+                               <!-- <tree>
+                                   <field name="partner_id"/>
+                                    <field name="Price"/>
+                                </tree>-->
+
                         </page>
                         <page string="Other Info">
                             <group>
@@ -106,8 +113,6 @@
         </field>
     </record>
 
-
-
     <record id="estate_property_search" model="ir.ui.view">
         <field name="name">Estate Property Search</field>
         <field name="model">estate.property</field>
@@ -118,11 +123,11 @@
                 <field name="expected_price"/>
                 <field name="bedrooms"/>
                 <field name="living_area"/>
-                <field name="facades"/> 
+                <field name="facades"/>
                 <filter name="4 or more bedrooms" domain="[('bedrooms', '>', 3)]"/>
                 <filter name="Properties with Garage" domain="[('garage', '=', True)]"/>
                 <filter name="2 bedrooms with garden" domain="[('bedrooms', '=', 2),('garage', '=', True)]"/>
-                <group expand="1" string="Group By"> 
+                <group expand="1" string="Group By">
                     <filter string="Postal Code" name="postcode" context="{'group_by': 'postcode'}"/>
                     <filter string="Number of bedrooms" name="bedrooms" context="{'group_by': 'bedrooms'}"/>
                 </group>
@@ -130,3 +135,5 @@
         </field>
     </record>
 </odoo>
+
+
