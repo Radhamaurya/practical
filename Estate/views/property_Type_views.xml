@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="estate_property_type" model="ir.ui.view">
+        <field name="name">Estate Property Type</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+
+    <record id="estate_property_type_form" model="ir.ui.view">
+        <field name="name">Estate Property Type Form</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <h1>
+                    <field name="name"/>
+                </h1>
+                <!-- <button name="offer_count" type="object" class="oe_stat_button" icon="fa-book" /> -->
+                <notebook>
+                    <page string="Properties">
+                        <field name="property_ids">
+                            <tree>
+                                <field name="name"/>
+                                <field name="expected_price"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="estate_property_tag" model="ir.ui.view">
+        <field name="name">Estate Property tag</field>
+        <field name="model">estate.property.tag</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="estate_property_offer_tree" model="ir.ui.view">
+        <field name="name">Estate Property Offer</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="price" decoration-danger="price &lt; 300000"/>
+                <field name="partner_id"/>
+                <field name="status"/>
+                <button name="action_accepted" type="object" class="oe_stat_button" icon="fa-check" />
+                <button name="action_rejected" type="object" class="oe_stat_button" icon="fa-close" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="estate_property_calendar" model="ir.ui.view">
+        <field name="name">Estate Property Calendar</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <calendar string="Property Available" date_start="date_availability" date_stop="date_deadline" color="id">
+                <field name="name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="estate_property_gantt" model="ir.ui.view">
+        <field name="name">Estate Property Gantt</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <gantt string="Date Available" date_start="date_availability" date_stop="date_deadline"/>
+        </field>
+    </record>
+
+    <record id="estate_property_graph" model="ir.ui.view">
+        <field name="name">Estate Property Graph</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <graph string="Property">
+                <field name="state"/>
+                <field name="best_price" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="estate_property_kanban" model="ir.ui.view">
+        <field name="name">Estate Property Kanban</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <templates>
+                <t t-name="kanban-box">
+                    <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                        <div class="row">
+                            <div class="col-4">
+                             <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image':'image_128'}"/>
+                         
+                                <!-- <field name="image" widget='image' class="oe_avatar"/> -->
+                            </div>
+                            <div class="col-8">
+                                <h5>
+                                    <b>
+                                        <field name="name"/>
+                                    </b>
+                                </h5>
+                                <field name="property_type_id"/>
+                                <field name="date_availability"/>
+                                <button class="btn-primary" name="open_offers" type="object">confirmed offers </button>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </field>
+    </record>
+</odoo>

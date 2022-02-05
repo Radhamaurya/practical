@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Create controller and render static template and create another controller and render 
+dynamic template with different directives You should use directives like t-foreach,
+ t-call- t-field, t-set, t-if, t-else, t-elif, t-att, attf, t-out -->
+
+
+    <template id="hello_world" name="Hello World">
+        <t t-call="website.layout">
+            <h4>
+                <strong>Hello World</strong>
+            </h4>
+        </t>
+    </template>
+
+
+    <template id="estate_property_list">
+
+        <div class="container">
+            <div>
+                <t t-out="SomeAdditionalData"/>
+            </div>
+            <div class="table-responsive">
+                <div>
+                    <table class="table">
+                        <thead>
+                            <th>Sequence</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>State</th>
+                        </thead>
+                        <tbody>
+                            <t t-set="sequence" t-value="0"/>
+                            <t t-foreach="property" t-as="property">
+                                <t t-set="sequence" t-value="sequence + 1"/>
+                                <tr t-attf-style="font-weight: bold;#{sequence % 2 == 0 and 'background: grey;' or ''}">
+                                    <td>
+                                        <t t-out="sequence" />
+                                    </td>
+                                    <td>
+                                        <a t-attf-href="/property/#{property.id}">
+                                            <t t-out="property.name" />
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <t t-out="property.name" />
+                                    </td>
+                                    <td>
+                                        <t t-if="property.description" t-out="property.description" />
+                                        <t t-else="">No Description Available</t>
+                                    </td>
+                                    <td>
+                                        <span t-field="property.state"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="hello_user" name="HOME">
+        <h4>
+            <strong>Welcome your land<t t-out="user.name"/>
+            </strong>
+        </h4>
+        <t t-call="Estate.estate_property_list">
+            <t t-set="SomeAdditionalData">Welcome your HOME !!!!</t>
+        </t>
+    </template>
+
+    <template id="properties" name="properties">
+        <t t-call="website.layout">
+            <div class="container">
+                <h4>
+                    <div class="text-center font-weight-bold">* * * * *  HOME * * * * *</div>
+                </h4>
+            </div>
+            <t t-call="Estate.estate_property_list">
+            </t>
+        </t>
+    </template>
+
+    <template id="property_details" name="property_details">
+        <div t-call="website.layout">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <div t-attf-style="padding-top: 70%;background-image:url(/web/image/estate.property/#{property.id}/image_1024); background-size:cover; background-position:center"/>
+                        <div>
+                            <div>State of the Property</div>
+                            <div t-field="property.state"/>
+                        </div>
+                    </div>
+                    <div class="col-8 property_details">
+                        <div class="text-center font-weight-bold">
+                            <span t-field="property.name"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>
+

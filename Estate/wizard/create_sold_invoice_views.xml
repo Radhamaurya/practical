@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--Add view for wizard-->
+    <record id="view_create_sold_invoice" model="ir.ui.view">
+        <field name="name">Create Sold Invoice</field>
+        <field name="model">create.sold.invoice</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="partner_id"/>
+                    <field name="charge"/>
+                </group>
+                <footer>
+                    <button name="make_invoice" class="btn-primary" type="object" string="Make Invoice"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--Add action for wizard-->
+    <record id="action_create_sold_invoice" model="ir.actions.act_window">
+        <field name="name">Change Customer for Invoice</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">create.sold.invoice</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record> 
+</odoo>

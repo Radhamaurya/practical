@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="estate_property_action" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">kanban,calendar,gantt,graph,tree,form</field>
+        <field name="context">{'search_default_create_uid': 1, 'is_my_property':True}</field>
+        <!-- <field name="context">{'search_default_state':'new'}</field> -->
+    </record>
+
+    <record id="estate_property_type_action" model="ir.actions.act_window">
+        <field name="name">Property Type</field>
+        <field name="res_model">estate.property.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="estate_property_offer_action" model="ir.actions.act_window">
+        <field name="name">Offers</field>
+        <field name="res_model">estate.property.offer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('status', '=', 'accepted')]</field>
+    </record>
+
+
+    <record id="estate_property_tag_action" model="ir.actions.act_window">
+        <field name="name">Property Tag</field>
+        <field name="res_model">estate.property.tag</field>
+        <field name="view_mode">tree,form</field>
+    </record> 
+
+    <menuitem id="estate_property_menu_root" name="Real Estate"/>
+
+    <menuitem id="estate_property_menu" name="Advertisements" parent="estate_property_menu_root"/>
+    <menuitem id="estate_property_menu_action" parent="estate_property_menu" action="estate_property_action"/>
+
+    <menuitem id="estate_property_type_menu" name="Settings" parent="estate_property_menu_root"/>
+    <menuitem id="estate_property_type_menu_action" parent="estate_property_type_menu" action="estate_property_type_action"/>
+
+    <menuitem id="estate_property_tag_menu_action" parent="estate_property_type_menu" action="estate_property_tag_action"/>
+    <menuitem id="estate_property_offer_menu_action" parent="estate_property_menu" action="estate_property_offer_action"/>
+    
+
+
+</odoo>

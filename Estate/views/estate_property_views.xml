@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="estate_property_tree" model="ir.ui.view">
+        <field name="name">Estate Property Name</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state == 'sold'" decoration-danger="state == 'cancel'">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="postcode"/>
+                <field name="property_tag_ids" widget="many2many_tags"/>
+                <field name="date_availability"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="facades"/>
+                <field name="garage"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="estate_property_form" model="ir.ui.view">
+        <field name="name">Estate Property Name</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <form string="Test">
+                <header>
+                    <button name="%(action_create_sold_invoice)d" type="action" string="Sold" attrs="{'invisible': [('state','=', 'sold')]}" context="{'default_partner_id': buyer_id}"/>
+                    <!-- <button class="btn-primary" name="action_sold" type="object" string="Sold"/> -->
+                    <button class="btn-primary" name="action_cancel" type="object" string="Cancelled"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="property_type_id"/>
+                        </group>
+                        <!-- <group>
+                            <field name="state"/>
+                        </group> -->
+                        <group>
+                        <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image':'image_128'}"/>
+                            <!-- <field name="image" widget='image' class="oe_avatar" /> -->
+                        </group>
+                        <group>
+                            <field name="property_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        </group>
+                        <group>
+                            <field name="postcode"/>
+                        </group>
+                        <group>
+                            <field name="date_availability"/>
+                        </group>
+                        <group>
+                            <field name="expected_price"/>
+                        </group>
+
+                        <group>
+                            <field name="best_price"/>
+                        </group>
+                        <group>
+                            <field name="selling_price"/>
+                        </group>
+                        <group>
+                            <field name="validity"/>
+                        </group>
+                        <group>
+                            <field name="date_deadline"/>
+                        </group>
+
+                    </group>
+                    <group>
+                        <notebook>
+                            <page string="Description">
+                                <group>
+                                    <group>
+                                        <field name="description"/>
+                                    </group>
+                                    <group>
+                                        <field name="bedrooms"/>
+                                    </group>
+                                    <group>
+                                        <field name="living_area"/>
+                                    </group>
+                                    <group>
+                                        <field name="facades"/>
+                                    </group>
+                                    <group>
+                                        <field name="garage"/>
+                                    </group>
+                                    <group>
+                                        <field name="garden"/>
+                                    </group>
+                                    <group>
+                                        <field name="garden_area" attrs="{'invisible':[('garden','=',False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="garden_orientation" attrs="{'invisible':[('garden','=',False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="date_availability"/>
+                                    </group>
+                                    <group>
+                                        <field name="total_area"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Offer">
+                                <field name="property_offer_ids">
+                                    <tree editable="True" decoration-success="status == 'accepted'" decoration-danger="status == 'rejected'">
+                                        <field name="price"/>
+                                        <field name="partner_id"/>
+                                        <field name="status" readonly="1"/>
+                                        <button name="action_accepted" type="object" class="oe_stat_button" icon="fa-check" />
+                                        <button name="action_rejected" type="object" class="oe_stat_button" icon="fa-close" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Other Info">
+                                <group>
+                                    <field name="buyer_id" string="Buyer" domain="[('is_buyer', '=','true')]"/>
+                                    <field name="salesman_id" string="Salesman"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="estate_property_search" model="ir.ui.view">
+        <field name="name">Estate Property Search</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="expected_price"/>
+                <field name="bedrooms"/>
+                <field name="living_area" filter_domain="[('living_area', '>', self)]"/>
+                <field name="state"/>
+                <filter name="4 or more bedrooms" domain="[('bedrooms', '>', 3)]"/>
+                <filter name="Properties with Garage" domain="[('garage', '=', True)]"/>
+                <filter name="2 bedrooms with garden" domain="[('bedrooms', '=', 2),('garage', '=', True)]"/>
+                <filter name="create_uid" string="MY PROPERTY" domain="[('create_uid', '=', uid)]" />
+                <filter name="Garden Property" domain="[('garden', '=', True)]"/>
+                <group expand="1" string="Group By">
+                    <filter string="living_area" name="living_area" context="{'group_by':'property_type_id', 'residual_visible':True}"/>
+                    <filter string="Postal Code" name="postcode" context="{'group_by': 'postcode'}"/>
+                    <filter string="Number of bedrooms" name="bedrooms" context="{'group_by': 'bedrooms'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add view for wizard -->
+    <record id="view_confirm_accept" model="ir.ui.view">
+        <field name="name">Confirm Accept Form</field>
+        <field name="model">confirm.accept</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                    It seems we have more buyer
+                </div>
+                <group>
+                    <field name="selected_partner_id" domain="[('id', 'in', context.get('partners',[]))]"/>
+<!--                    <field name="charge"/>-->
+                </group>
+                <footer>
+                    <button name="confirm" class="btn-primary" type="object" string="Yes"/>
+                    <button string="No" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Add action for the wizard -->
+    <record id="action_confirm_accept" model="ir.actions.act_window">
+        <field name="name">Confirm Offer</field>
+        <!-- <field name="type">ir.actions.act_window</field> -->
+        <field name="res_model">confirm.accept</field>
+         <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+</odoo> 

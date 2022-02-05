@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!--Group-->
+    <record id="module_estate_menu" model="ir.module.category">
+        <field name="name">Real estate</field>
+        <field name="description">Helps you manage your employees.</field>
+    </record>
+
+    <record id="module_estate" model="ir.module.category">
+        <field name="name">Real estate</field>
+        <field name="description">Helps you manage your employees.</field>
+        <field name="parent_id" ref="module_estate_menu"/>
+    </record>
+
+    <!--Access Rights-->
+
+    <record id="estate_group_agent" model="res.groups">
+        <field name="name">Agent</field>
+        <field name="category_id" ref="module_estate"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="estate_group_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_estate"/>
+        <field name="implied_ids" eval="[(4, ref('estate_group_agent'))]"/>
+    </record>
+
+    <!--Record Rules-->
+
+    <record id="estate_group_agent_rule" model="ir.rule">
+        <field name="name">Agent D</field>
+        <field name="model_id" ref="model_estate_property"/>
+        <field name="domain_force">[('salesman_id', '=', user.id)]</field>
+        <field name="groups" eval="[4,(ref('Estate.estate_group_agent'))]"/>
+    </record>
+
+    <record id="estate_group_manager_rule" model="ir.rule">
+        <field name="name">Manager A</field>
+        <field name="model_id" ref="model_estate_property"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('Estate.estate_group_manager'))]"/>
+    </record>
+
+
+</odoo>
